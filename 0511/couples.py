@@ -6,7 +6,8 @@ female = ['성지영','김은정','김선정','이현아','이은진']
 
 shuffle(male)
 shuffle(female)
-
+#zip()함수는 각 리스트의 동일한 인덱스의 요소 끼리 묶는다.
+#zip()함수의 결과를 list로 형변환 하지 않으면 출력할때 에러가 발생할 수 있다.
 couples = zip(male,female)
 couples_data = list(couples)
 
