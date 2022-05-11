@@ -10,7 +10,7 @@ print("<2022년 상반기 판매실적>")
 for key,value in items:
     print(key + "판매 실적: ",format(value,",")+ "원")
 
-# format(항목,"형식지정자")
+# format(항목,"형식지정자")aa
 
 
 
