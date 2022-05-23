@@ -10,6 +10,10 @@ import tkinter.font as tkFont
 def refreshTreeview(data_list):
     deleteTreeData()
     refreshTreeData(data_list)
+def outputEvtHandler():
+    print("전체 보기 ...")
+    refreshTreeview(data_list)
+
 
 def deleteTreeData():
     children = tree.get_children()  #get_children()함수는 표의 하위 항목을 반환한다.
@@ -43,6 +47,27 @@ def inputEvtHandler():
 
         refreshTreeview(data_list)
         # end inputEvtHandler()
+def searchEvtHandler():
+    print("이름검색...")
+    sname = entry_name.get()
+    if sname == "":
+        messagebox.showinfo('경고','검색할 이름을 입력하세요!' )
+        return
+
+    search_data_list = []
+
+    for data in data_list:
+        try:
+            index = data.index(sname)
+            search_data_list.append(data)
+        except:
+            pass #예외가 발생하여도 처리하지 않고 회피할 수있는 방법이다.
+    if search_data_list == []:
+       messagebox.showinfo('경고','찾는 정보가 없습니다.')
+       return
+
+    refreshTreeview(search_data_list)
+
 def modifyEvtHandler():
     print('수정...')
     sname = entry_name.get()
@@ -66,6 +91,24 @@ def modifyEvtHandler():
     if idx == -1:
         messagebox.showinfo('경고', '찾는 정보가 없습니다.')
 # pickle 모듈을 불러온다.
+def deleteEvtHanler():
+    print("삭제...")
+    sname = entry_name.get()
+    if sname == "":
+        messagebox.showinfo('경고','삭제할 이름을 입력하세요!')
+        return
+
+    idex = -1
+    for data in data_list:
+        try:
+            idx = data.index(sname)
+            del data_list[data_list.index(data)]
+            refreshTreeview(data_list)
+        except:
+            pass
+    if idx == -1:
+        messagebox.showinfo('경고','찾는 정보가 없습니다.')
+
 import pickle
 def saveEvtHandler():
   print("파일 저장...")
@@ -181,11 +224,11 @@ def click_item(event):
 panedwindow = PanedWindow(bottomFrame, relief='raised',bd=0)
 panedwindow.pack()
 
-btn_output = Button(panedwindow, text='전체보기')
+btn_output = Button(panedwindow, text='전체보기', command=outputEvtHandler)
 btn_input = Button(panedwindow, text='추가', command=inputEvtHandler)
-btn_search = Button(panedwindow, text='검색')
+btn_search = Button(panedwindow, text='이름 검색', command=searchEvtHandler)
 btn_modify = Button(panedwindow, text='수정', command=modifyEvtHandler)
-btn_delete = Button(panedwindow, text='삭제')
+btn_delete = Button(panedwindow, text='삭제', command=deleteEvtHanler)
 
 panedwindow.add(btn_output)
 panedwindow.add(btn_input)
